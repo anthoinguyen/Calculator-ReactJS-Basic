@@ -36,12 +36,15 @@ class App extends Component {
 
   calculate = symbol => {
     let { current, previous } = this.state;
+    let tempCal ="";
+    let calculate = 0;
     if (previous.length > 0) {
       for (let i = 0; i < previous.length; i++) {
-        /* eslint no-eval: 0 */
-        current = eval(String(previous[i] + current));
+        tempCal = tempCal + this.state.previous[i];
       }
-      this.setState({ current, previous: [], nextIsReset: true });
+      /* eslint no-eval: 0 */
+      calculate = eval(String(tempCal + current));
+      this.setState({ current: calculate, previous: [], nextIsReset: true });
     }
   };
 
@@ -66,10 +69,10 @@ class App extends Component {
       { symbol: "=", cols: 1, action: this.calculate }
     ];
 
-    let display ="";
+    let display = "";
     if (this.state.previous.length > 0) {
       for (let i = 0; i < this.state.previous.length; i++) {
-        display =  display + this.state.previous[i];
+        display = display + this.state.previous[i];
       }
     } else {
       display = null;
